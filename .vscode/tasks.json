@@ -1,0 +1,76 @@
+{
+	"version": "2.0.0",
+	"presentation": {
+		"focus": true,
+		"showReuseMessage": false,
+		"clear": true
+	},
+	"tasks": [{
+		"type": "shell",
+		"label": "Create bin folder",
+		"command": "mkdir -p ./bin",
+		"options": {
+			"cwd": "${workspaceFolder}"
+		},
+		"presentation": {
+			"echo": false,
+			"reveal": "never",
+			"focus": false,
+			"showReuseMessage": false,
+			"clear": false
+		}
+	},{
+		"type": "process",
+		"label": "Build",
+		"command": "g++.exe",
+		"args": [
+			"-g",
+			"./src/*.cpp",
+			"-o",
+			"./bin/main.exe",
+			// Libs---------------------------------------------------------
+			//"-I./dependencies/LIBRARY/include",
+			//"-L./dependencies/LIBRARY/lib",
+			//"-lbinary",
+			//"-lotherBinary",
+		],
+		"options": {
+			"cwd": "${workspaceFolder}"
+		},
+		"problemMatcher": [
+			"$gcc"
+		],
+		"dependsOn": ["Create bin folder"],
+		"group": {
+			"kind": "build",
+			"isDefault": true
+		}
+	}, {
+		"type": "process",
+		"label": "Compile",
+		"command": "g++",
+		"args": [
+			"${file}",
+			"-fsyntax-only",
+			// Libs---------------------------------------------------------
+			//"-I./dependencies/LIBRARY/include"
+		],
+		"options": {
+			"cwd": "${workspaceFolder}"
+		},
+		"problemMatcher": [
+			"$gcc"
+		]
+	}, {
+		"type": "process",
+		"label": "Launch",
+		"command": "./bin/main.exe",
+		"options": {
+			"cwd": "${workspaceFolder}"
+		},
+		"presentation": {
+			"echo": false
+		},
+		"dependsOn": ["Build"]
+	}]
+}
